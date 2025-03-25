@@ -159,14 +159,15 @@ cat << 'EOF' > .prettier.config.js
  * @type {import("prettier").Config}
  */
 const config = {
-  trailingComma: 'es5',
+  trailingComma: "es5",
   tabWidth: 2,
   semi: true,
   singleQuote: false,
   jsxSingleQuote: false,
   printWidth: 120,
-  plugins: ['prettier-plugin-tailwindcss'],
-  tailwindStylesheet: './src/app/globals.css',
+  plugins: ["prettier-plugin-tailwindcss"],
+  tailwindStylesheet: "./src/app/globals.css",
+  tailwindFunctions: ["tv"],
 };
 
 module.exports = config;
@@ -194,6 +195,9 @@ cat << 'EOF' > .vscode/settings.json
   }
 }
 EOF
+
+# Add tailwind-variants (optional)
+pnpm add tailwind-variants
 
 git add .
 git commit -m "Install HeroUI with setup.sh script"

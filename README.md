@@ -23,6 +23,7 @@ pnpm deploy
 - [Next.js 15](https://nextjs.org/docs/getting-started)
 - [HeroUI v2 (beta)](https://beta.heroui.com/docs/guide/tailwind-v4)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Framer Motion](https://www.framer.com/motion/)
 - [next-themes](https://github.com/pacocoursey/next-themes)
