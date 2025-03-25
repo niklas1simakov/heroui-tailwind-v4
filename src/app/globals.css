@@ -4,5 +4,5 @@
 @config "../../tailwind.config.js";
 
 @theme {
-  --color-primary: red;
+  /* Add your theme variables here */
 }
