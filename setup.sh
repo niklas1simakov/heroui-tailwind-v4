@@ -172,6 +172,29 @@ const config = {
 module.exports = config;
 EOF
 
+# Add vs code settings
+cat << 'EOF' > .vscode/settings.json
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "javascript": "javascript",
+    "css": "css"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  }
+}
+EOF
+
 git add .
 git commit -m "Install HeroUI with setup.sh script"
 
