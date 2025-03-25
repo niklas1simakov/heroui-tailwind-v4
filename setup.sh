@@ -20,7 +20,7 @@ pnpm add --allow-build=sharp next@latest
 pnpm install
 
 # Install prettier
-pnpm add prettier prettier-plugin-tailwindcss
+pnpm add prettier prettier-plugin-tailwindcss --save-dev
 
 # Install the beta version of HeroUI
 pnpm add --allow-build=@heroui/shared-utils @heroui/react@beta framer-motion next-themes
