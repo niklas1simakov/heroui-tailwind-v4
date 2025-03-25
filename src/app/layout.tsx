@@ -20,19 +20,11 @@ export const metadata: Metadata = {
   description: "Hero UI Next App with Tailwind CSS v4",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          {children}
-        </Providers>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>{children}</Providers>
       </body>
     </html>
   );

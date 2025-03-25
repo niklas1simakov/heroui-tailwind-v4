@@ -20,9 +20,13 @@ pnpm deploy
 
 ## Libraries
 
-- [Tailwind CSS](https://tailwindcss.com)
-- [Next.js](https://nextjs.org)
-- [HeroUI](https://heroui.com)
+- [Next.js 15](https://nextjs.org/docs/getting-started)
+- [HeroUI v2 (beta)](https://beta.heroui.com/docs/guide/tailwind-v4)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [next-themes](https://github.com/pacocoursey/next-themes)
+- [Prettier](https://prettier.io/)
 
 ## License
 

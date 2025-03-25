@@ -15,7 +15,7 @@ pnpm dlx create-next-app@latest $projectName --typescript --tailwind --eslint --
 
 cd $projectName
 
-# Reinstall next.js to allow for sharp to be built
+# Reinstall next.js to allow for sharp to be automatically built
 pnpm add --allow-build=sharp next@latest
 pnpm install
 
@@ -33,14 +33,13 @@ echo "package-lock=true" >> .npmrc
 pnpm install --force
 
 # Setup Tailwind CSS
-# tailwind.config.js
 cat << 'EOF' > tailwind.config.js
 const { heroui } = require("@heroui/react"); 
 
 /**
  * Please note that Hero UI currently only works if you use the config file.
- * With tailwindcss v4 you would normally use your css files to set all the required config variables.
- * Therefore please also check the globals.css and configure the variables there.
+ * With tailwindcss v4 you would normally use your css files to set all the required config variables, 
+ * but this is not possible with Hero UI.
  */
 
 /** @type {import('tailwindcss').Config} */
@@ -48,6 +47,9 @@ module.exports = {
   content: [
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
+  theme: {
+    extend: {},
+  },
   darkMode: "class",
   plugins: [heroui()],
 };
@@ -59,10 +61,6 @@ cat << 'EOF' > src/app/globals.css
 
 /* Hero UI currently only works if you use the config file. However you can still use the @theme directive. */
 @config "../../tailwind.config.js";
-
-@theme {
-  /* Add your theme variables here */
-}
 EOF
 
 # Setup providers.tsx
@@ -92,7 +90,8 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 }
 EOF
 
-# Setup layout.tsx
+# Add the provider to the layout.tsx file
+# This is the main layout file that is used to wrap the app
 cat << 'EOF' > src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -116,26 +115,18 @@ export const metadata: Metadata = {
   description: "Hero UI Next App with Tailwind CSS v4",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          {children}
-        </Providers>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>{children}</Providers>
       </body>
     </html>
   );
 }
 EOF
 
-# Setup page.tsx
+# Setup an example page
 cat << 'EOF' > src/app/page.tsx
 "use client";
 
@@ -143,11 +134,10 @@ import { Button } from "@heroui/react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl font-bold mb-4">Hello World</h1>
-      <p className="text-lg mb-4">
-        This is a simple example of how to use the new beta version of Hero UI
-        with Tailwind CSS v4.
+    <div className="flex h-screen flex-col items-center justify-center">
+      <h1 className="mb-4 text-4xl font-bold">Hello World</h1>
+      <p className="mb-4 text-lg">
+        This is a simple example of how to use the new beta version of Hero UI with Tailwind CSS v4.
       </p>
       <div className="flex flex-row gap-4">
         <Button variant="shadow" color="primary">
@@ -160,6 +150,26 @@ export default function Home() {
     </div>
   );
 }
+EOF
+
+# Prettier config
+cat << 'EOF' > .prettier.config.js 
+/**
+ * @see https://prettier.io/docs/configuration
+ * @type {import("prettier").Config}
+ */
+const config = {
+  trailingComma: 'es5',
+  tabWidth: 2,
+  semi: true,
+  singleQuote: false,
+  jsxSingleQuote: false,
+  printWidth: 120,
+  plugins: ['prettier-plugin-tailwindcss'],
+  tailwindStylesheet: './src/app/globals.css',
+};
+
+module.exports = config;
 EOF
 
 git add .
