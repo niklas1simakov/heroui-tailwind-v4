@@ -1,8 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Hero UI currently only works if you use the config file. However you can still use the @theme directive. */
 @config "../../tailwind.config.js";
-
-@theme {
-  /* Add your theme variables here */
-}
