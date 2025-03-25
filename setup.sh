@@ -2,6 +2,11 @@
 
 echo "This script will setup a new Next.js 15 project with Tailwind CSS V4 and HeroUI."
 
+if ! command -v cat &> /dev/null; then
+    echo "Error: cat command is not available"
+    exit 1
+fi
+
 # Enter project name
 read -p "Enter project name: " projectName
 
@@ -29,7 +34,8 @@ pnpm install --force
 
 # Setup Tailwind CSS
 # tailwind.config.js
-echo 'const { heroui } = require("@heroui/react"); 
+cat << 'EOF' > tailwind.config.js
+const { heroui } = require("@heroui/react"); 
 
 /**
  * Please note that Hero UI currently only works if you use the config file.
@@ -45,10 +51,11 @@ module.exports = {
   darkMode: "class",
   plugins: [heroui()],
 };
-' > tailwind.config.js
+EOF
 
 # Setup globals.css
-echo '@import "tailwindcss";
+cat << 'EOF' > src/app/globals.css
+@import "tailwindcss";
 
 /* Hero UI currently only works if you use the config file. However you can still use the @theme directive. */
 @config "../../tailwind.config.js";
@@ -56,10 +63,11 @@ echo '@import "tailwindcss";
 @theme {
   /* Add your theme variables here */
 }
-' > src/app/globals.css
+EOF
 
 # Setup providers.tsx
-echo '"use client";
+cat << 'EOF' > src/app/providers.tsx
+"use client";
 
 import type { ThemeProviderProps } from "next-themes";
 
@@ -82,10 +90,11 @@ export function Providers({ children, themeProps }: ProvidersProps) {
     </HeroUIProvider>
   );
 }
-' > src/app/providers.tsx
+EOF
 
 # Setup layout.tsx
-echo 'import type { Metadata } from "next";
+cat << 'EOF' > src/app/layout.tsx
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
@@ -124,10 +133,11 @@ export default function RootLayout({
     </html>
   );
 }
-' > src/app/layout.tsx
+EOF
 
 # Setup page.tsx
-echo '"use client";
+cat << 'EOF' > src/app/page.tsx
+"use client";
 
 import { Button } from "@heroui/react";
 
@@ -150,7 +160,10 @@ export default function Home() {
     </div>
   );
 }
-' > src/app/page.tsx
+EOF
+
+git add .
+git commit -m "Install HeroUI with setup.sh script"
 
 # Run the development server
 pnpm dev
