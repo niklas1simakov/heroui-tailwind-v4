@@ -199,6 +199,9 @@ EOF
 # Add tailwind-variants (optional)
 pnpm add tailwind-variants
 
+# Add react-icons (optional)
+pnpm add react-icons
+
 git add .
 git commit -m "Install HeroUI with setup.sh script"
 
