@@ -34,6 +34,7 @@ pnpm deploy
 - [Framer Motion](https://www.framer.com/motion/)
 - [next-themes](https://github.com/pacocoursey/next-themes)
 - [Prettier](https://prettier.io/)
+- [react-icons](https://react-icons.github.io/react-icons/)
 
 ## License
 
