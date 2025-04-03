@@ -3,11 +3,7 @@
 import { useTheme } from "next-themes";
 import { TbMoonFilled, TbSunFilled } from "react-icons/tb";
 
-interface ThemeSwitchProps {
-  className?: string;
-}
-
-export function ThemeSwitch({ className }: ThemeSwitchProps) {
+export function ThemeSwitch({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
