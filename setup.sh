@@ -32,6 +32,12 @@ echo "package-lock=true" >> .npmrc
 # Install dependencies
 pnpm install --force
 
+# Install react-icons
+pnpm add react-icons
+
+# Install react-aria/ssr
+pnpm add @react-aria/ssr
+
 # Setup Tailwind CSS
 cat << 'EOF' > tailwind.config.js
 const { heroui } = require("@heroui/react"); 
@@ -46,6 +52,7 @@ const { heroui } = require("@heroui/react");
 module.exports = {
   content: [
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
@@ -59,7 +66,10 @@ EOF
 cat << 'EOF' > src/app/globals.css
 @import "tailwindcss";
 
-/* Hero UI currently only works if you use the config file. However you can still use the @theme directive. */
+/* 
+Hero UI currently only works if you use the config file. Use the config file to set all the required config variables. 
+Also check out the docs for more information: https://www.heroui.com/docs/customization/theme 
+*/
 @config "../../tailwind.config.js";
 EOF
 
@@ -69,10 +79,9 @@ cat << 'EOF' > src/app/providers.tsx
 
 import type { ThemeProviderProps } from "next-themes";
 
-import * as React from "react";
 import { HeroUIProvider } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { useRouter } from "next/navigation";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -125,6 +134,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 }
 EOF
+
+# Create components directory
+mkdir -p src/components
 
 # Add ThemeSwitch component
 cat << 'EOF' > src/components/ThemeSwitch.tsx
@@ -185,7 +197,7 @@ export default function Home() {
 EOF
 
 # Prettier config
-cat << 'EOF' > .prettier.config.js 
+cat << 'EOF' > prettier.config.js 
 /**
  * @see https://prettier.io/docs/configuration
  * @type {import("prettier").Config}
@@ -204,6 +216,9 @@ const config = {
 
 module.exports = config;
 EOF
+
+# Create .vscode directory
+mkdir -p .vscode
 
 # Add vs code settings
 cat << 'EOF' > .vscode/settings.json
@@ -224,7 +239,8 @@ cat << 'EOF' > .vscode/settings.json
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"
-  }
+  },
+  "tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]]
 }
 EOF
 
@@ -271,9 +287,6 @@ EOF
 
 # Add tailwind-variants (optional)
 pnpm add tailwind-variants
-
-# Add react-icons (optional)
-pnpm add react-icons
 
 git add .
 git commit -m "Install HeroUI with setup.sh script"
